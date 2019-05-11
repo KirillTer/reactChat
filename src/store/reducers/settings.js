@@ -5,20 +5,14 @@ const initialState = {
     username: 'username',
     interfacecolor: 'white',
     clockdisplay: '12',
-    sendmessagetype: false,
+    sendmessagetype: '0',
     language: 'eng'
 }
 
 export default (state = initialState, {type, payload}) => {
     switch (type) {
         case SAVE_SETTINGS:
-            return R.merge(state, {
-                username: payload.username,
-                interfacecolor: payload.interfacecolor,
-                clockdisplay: payload.clockdisplay,
-                sendmessagetype: payload.sendmessagetype,
-                language: payload.language
-            })
+            return R.merge(state, payload)
         case RESET_SETTINGS:
             console.log('reset reduces')
             return state = initialState
