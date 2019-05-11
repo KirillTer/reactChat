@@ -5,86 +5,104 @@ import {saveSettingsAction, resetSettingsAction} from '../store/actions'
 import {getSettingsSelector} from '../store/selectors'
 
 const Settings = ({settings, saveSettingsAction, resetSettingsAction}: any) => {
-    const updateName = (event: any) => {
+    const updateForm = (event: any) => {
         event.persist()
         console.log('event', event.target.id)
-        saveSettingsAction({username: event.target.value})
-    }
-    const updateView = (event: any) => {
-        event.persist()
-        console.log('event', event.target.id)
-        saveSettingsAction({interfacecolor: event.target.value})
-    }
-    const updateTime = (event: any) => {
-        event.persist()
-        console.log('event', event.target.id)
-        saveSettingsAction({clockdisplay: event.target.value})
-    }
-    const updateMessageType = (event: any) => {
-        event.persist()
-        console.log('event', event.target.id)
-        saveSettingsAction({sendmessagetype: event.target.value})
-    }
-    const updateLanguage = (event: any) => {
-        event.persist()
-        console.log('event', event.target.id)
-        saveSettingsAction({language: event.target.value})
+        const obj: {[key: string]: any} = {};
+        obj[event.target.id] = event.target.value;
+        saveSettingsAction(obj);
     }
     return (
     <div className="container">
         <div className="row">
             <div className="border rounded-lg col-md-12">
-                <form className="col-md-4 offset-md-4" onChange={(event) => updateName(event)}>
+                <form className="col-md-4 offset-md-4" onChange={(event) => updateForm(event)}>
                     <div className="form-group">
                         <label>User name</label>
-                        <input type="text" className="form-control" id="username" aria-describedby="emailHelp" placeholder="Enter name" />
+                        <input type="text" className="form-control" id="username" value={settings.username} placeholder="Enter name" />
                     </div>
                 </form>
-                <form className="col-md-4 offset-md-4" onChange={(event) => updateView(event)}>
+                <form className="col-md-4 offset-md-4" onChange={(event) => updateForm(event)}>
                     <div className="form-group">
                         <label className="form-row">Interface color</label>
                         <div className="form-check form-check-inline">
-                            <input className="form-check-input" type="radio" name="inlineRadioOptions" id="interfacecolor" value="white" />
+                            <input
+                                className="form-check-input"
+                                type="radio"
+                                name="inlineRadioOptions"
+                                id="interfacecolor"
+                                value="white"
+                                checked={settings.interfacecolor === 'white'} />
                             <label className="form-check-label">Light</label>
                         </div>
                         <div className="form-check form-check-inline">
-                            <input className="form-check-input" type="radio" name="inlineRadioOptions" id="interfacecolor" value="black" />
-                            <label className="form-check-label">Dark</label>
+                            <input
+                                className="form-check-input"
+                                type="radio"
+                                name="inlineRadioOptions"
+                                id="interfacecolor"
+                                value="black"
+                                checked={settings.interfacecolor === 'black'} />
+                                <label className="form-check-label">Dark</label>
                         </div>
                     </div>
                 </form>
-                <form className="col-md-4 offset-md-4" onChange={(event) => updateTime(event)}>
+                <form className="col-md-4 offset-md-4" onChange={(event) => updateForm(event)}>
                     <div className="form-group">
                         <label className="form-row">Clock display</label>
                         <div className="form-check form-check-inline">
-                            <input className="form-check-input" type="radio" name="inlineRadioOptions" id="clockdisplay" value="12" />
-                            <label className="form-check-label">12 Hours</label>
+                            <input
+                                className="form-check-input"
+                                type="radio"
+                                name="inlineRadioOptions"
+                                id="clockdisplay"
+                                value="12"
+                                checked={settings.clockdisplay === '12'} />
+                                <label className="form-check-label">12 Hours</label>
                         </div>
                         <div className="form-check form-check-inline">
-                            <input className="form-check-input" type="radio" name="inlineRadioOptions" id="clockdisplay" value="24" />
-                            <label className="form-check-label">24 Hours</label>
+                            <input
+                                className="form-check-input"
+                                type="radio"
+                                name="inlineRadioOptions"
+                                id="clockdisplay"
+                                value="24"
+                                checked={settings.clockdisplay === '24'} />
+                                <label className="form-check-label">24 Hours</label>
                         </div>
                     </div>
                 </form>
-                <form className="col-md-4 offset-md-4" onChange={(event) => updateMessageType(event)}>
+                <form className="col-md-4 offset-md-4" onChange={(event) => updateForm(event)}>
                     <div className="form-group">
                         <label className="form-row">Send message on CTRL+enter</label>
                         <div className="form-check form-check-inline">
-                            <input className="form-check-input" type="radio" name="inlineRadioOptions" id="sendmessagetype" value={1} />
+                            <input
+                                className="form-check-input"
+                                type="radio"
+                                name="inlineRadioOptions"
+                                id="sendmessagetype"
+                                value="1"
+                                checked={settings.sendmessagetype === "1"} />
                             <label className="form-check-label">On</label>
                         </div>
                         <div className="form-check form-check-inline">
-                            <input className="form-check-input" type="radio" name="inlineRadioOptions" id="sendmessagetype" value={0} />
-                            <label className="form-check-label">Off</label>
+                            <input
+                                className="form-check-input"
+                                type="radio"
+                                name="inlineRadioOptions"
+                                id="sendmessagetype"
+                                value="0"
+                                checked={settings.sendmessagetype === "0"} />
+                                <label className="form-check-label">Off</label>
                         </div>
                     </div>
                 </form>
-                <form className="col-md-4 offset-md-4" onChange={(event) => updateLanguage(event)}>
+                <form className="col-md-4 offset-md-4" onChange={(event) => updateForm(event)}>
                     <div className="form-group">
                         <label>Language</label>
-                        <select id="language" className="form-control">
+                        <select value={settings.language} id="language" className="form-control">
                             <option value='eng'>English</option>
-                            <option value='ger'>German</option>
+                            <option selected value='ger'>German</option>
                         </select>
                     </div>
                 </form>
